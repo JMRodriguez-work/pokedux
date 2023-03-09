@@ -1,4 +1,4 @@
-import { SET_POKEMONS } from './types'
+import { SET_LOADING, SET_POKEMONS } from './types'
 import { getPokemonsDetails } from '../api'
 
 export const setPokemons = (payload) => ({
@@ -6,11 +6,18 @@ export const setPokemons = (payload) => ({
   payload
 })
 
+export const setLoading = (payload) => ({
+  type: SET_LOADING,
+  payload
+})
+
 export const getPokemonsWithDetails =
   (pokemons = []) =>
     async (dispatch) => {
+      dispatch(setLoading(true))
       const pokemonsDetailed = await Promise.all(
         pokemons.map((pokemon) => getPokemonsDetails(pokemon))
       )
       dispatch(setPokemons((pokemonsDetailed)))
+      dispatch(setLoading(false))
     }

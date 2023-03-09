@@ -10,6 +10,7 @@ const API_URL_GET_POKEMONS =
 
 function App () {
   const pokemons = useSelector(state => state.pokemons)
+  const loading = useSelector(state => state.loading)
   const dispatch = useDispatch()
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -23,7 +24,7 @@ function App () {
     <div className='min-h-screen bg-[#fffffe] dark:bg-[#0f0e17]'>
       <Navbar />
       <Searcher />
-      {!pokemons.length
+      {loading // Lo seteamos en getPokemonsWithDetails
         ? <Spinner />
         : <PokemonList pokemons={pokemons} />}
     </div>
