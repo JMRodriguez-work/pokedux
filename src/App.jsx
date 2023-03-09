@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Navbar, PokemonList, Searcher } from './components/index'
-import { setPokemons } from './actions'
-import { getPokemons, getPokemonsDetails } from './api'
+import { getPokemonsWithDetails } from './actions'
+import { getPokemons } from './api'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spinner } from './assets/Spinner'
 
@@ -14,8 +14,7 @@ function App () {
   useEffect(() => {
     const fetchPokemons = async () => {
       const pokemonRes = await getPokemons(API_URL_GET_POKEMONS)
-      const pokemonsDetailed = await Promise.all(pokemonRes.map(pokemon => getPokemonsDetails(pokemon)))
-      dispatch(setPokemons(pokemonsDetailed))
+      dispatch(getPokemonsWithDetails(pokemonRes))
     }
     fetchPokemons()
   }, [])
